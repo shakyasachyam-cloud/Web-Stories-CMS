@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import useStories from "../hooks/useStories";
-import StoryGrid from "../components/StoryGrid";
 
 export default function HomePage() {
-  const { loading, error, getStoriesByCategory } = useStories();
-  const categories = getStoriesByCategory();
+  const [categories, setCategories] = useState([]);
 
-  if (loading) return <div className="min-h-screen bg-black text-white p-6">Loading...</div>;
-  if (error) return <div className="min-h-screen bg-black text-white p-6">Error: {error}</div>;
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    const res = await axios.get("https://web-stories-cms-player-mpph.vercel.app/api/stories");
+    console.log(res.data);
+
+    const grouped = {};
+
+    res.data.forEach((story) => {
+      if (!grouped[story.category]) {
+        grouped[story.category] = [];
+      }
+      grouped[story.category].push(story);
+    });
+
+    // ✅ Convert to array with preview image
+    const finalData = Object.keys(grouped).map((cat) => {
+      const firstStory = grouped[cat][0];
+      const preview = firstStory.preview;
+      return {
+        name: cat,
+        preview,
+      };
+    });
+
+    setCategories(finalData);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -22,7 +47,32 @@ export default function HomePage() {
         </Link>
       </div>
 
-      <StoryGrid items={categories} type="category" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {categories.map((cat, index) => (
+          <Link
+            key={index}
+            to={`/category/${cat.name}`}
+            className="
+            bg-gradient-to-r from-purple-500 via-pink-500 to-red-500
+            group relative rounded-xl overflow-hidden p-[2px]
+            transition-all duration-500
+            hover:animate-gradient-move
+  "
+          >
+            {/* Inner black card */}
+            <div
+              className="
+              group-hover:bg-black/70 transition duration-300
+              bg-black rounded-xl h-40 flex items-center justify-center
+              "
+            >
+              <span className="text-white font-bold text-2xl capitalize tracking-wide">
+                {cat.name}
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
