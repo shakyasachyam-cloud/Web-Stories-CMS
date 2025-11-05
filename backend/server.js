@@ -10,7 +10,7 @@ const corsOptions = {
     'https://web-stories-cms-player-mpph.vercel.app', // your frontend URL
     'http://localhost:3000', // for local testing
   ],
-  methods: ['GET','POST','PUT','DELETE'],
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   credentials: true,
 };
 
