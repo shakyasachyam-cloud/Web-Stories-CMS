@@ -1,0 +1,108 @@
+.story-container {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Progress bars */
+.story-progress {
+  position: absolute;
+  top: 10px;
+  width: 95%;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+.bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar .inner {
+  height: 100%;
+  width: 0%;
+  background: white;
+}
+
+.bar .inner.completed {
+  width: 100%;
+}
+
+.bar .inner.animate {
+  animation: fill 3s linear forwards;
+}
+
+@keyframes fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Center media */
+.story-media {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  animation-duration: .6s;
+  animation-fill-mode: both;
+}
+
+/* Animations */
+.fade { animation-name: fade; }
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-left { animation-name: slide-left; }
+@keyframes slide-left {
+  from { transform: translateX(80px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.slide-right { animation-name: slide-right; }
+@keyframes slide-right {
+  from { transform: translateX(-80px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Title */
+.story-title {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 20;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 22px;
+  background: rgba(0,0,0,0.4);
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+/* Tap zones */
+.tap-left, .tap-right {
+  position: absolute;
+  top: 0;
+  width: 40%;
+  height: 100%;
+  z-index: 5;
+}
+
+.tap-left { left: 0; }
+.tap-right { right: 0; }
