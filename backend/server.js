@@ -8,9 +8,7 @@ const app = express();
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
-app.use(cors({
-  origin: process.env.FRONTEND_URL || '*'
-}));
+app.use(cors());
 app.use("/api/auth", authRoutes);
 
 // Connect to MongoDB
