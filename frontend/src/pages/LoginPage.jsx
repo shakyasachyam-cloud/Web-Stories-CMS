@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("https://web-stories-cms-player-5b9q.vercel.app//api/auth/login", {
         email,
         password,
       });
