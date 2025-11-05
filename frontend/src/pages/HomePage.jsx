@@ -4,55 +4,39 @@ import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     loadCategories();
   }, []);
 
   const loadCategories = async () => {
-    try {
-      setLoading(true);
-      setError("");
+    const res = await axios.get("https://web-stories-cms-player-mpph.vercel.app/api/stories");
 
-      const res = await axios.get(
-        "https://web-stories-cms-player-mpph.vercel.app/api/stories"
-      );
+    const grouped = {};
 
-      const grouped = {};
+    res.data.forEach((story) => {
+      if (!grouped[story.category]) {
+        grouped[story.category] = [];
+      }
+      grouped[story.category].push(story);
+    });
 
-      res.data.forEach((story) => {
-        if (!grouped[story.category]) {
-          grouped[story.category] = [];
-        }
-        grouped[story.category].push(story);
-      });
+    // ✅ Convert to array with preview image
+    const finalData = Object.keys(grouped).map((cat) => {
+      const firstStory = grouped[cat][0];
+      const preview = firstStory.preview;
+      return {
+        name: cat,
+        preview,
+      };
+    });
 
-      const finalData = Object.keys(grouped).map((cat) => {
-        const firstStory = grouped[cat][0];
-        return {
-          name: cat,
-          preview: firstStory.preview || null,
-        };
-      });
-
-      setCategories(finalData);
-    } catch (err) {
-      console.error("Error fetching categories:", err.message);
-      setError("Failed to load categories. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
+    setCategories(finalData);
   };
-
-  if (loading) return <div className="p-6 text-white">Loading categories...</div>;
-  if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <h1 className="text-3xl font-bold mb-6">Discover Categories</h1>
-
       <div className="flex justify-end mb-4">
         <Link
           to="/admin"
@@ -67,21 +51,23 @@ export default function HomePage() {
           <Link
             key={index}
             to={`/category/${cat.name}`}
-            className="group relative rounded-xl overflow-hidden p-[2px] transition-all duration-500 hover:animate-gradient-move bg-gradient-to-r from-purple-500 via-pink-500 to-red-500"
+            className="
+            bg-gradient-to-r from-purple-500 via-pink-500 to-red-500
+            group relative rounded-xl overflow-hidden p-[2px]
+            transition-all duration-500
+            hover:animate-gradient-move
+  "
           >
+            {/* Inner black card */}
             <div
-              className="group-hover:bg-black/70 transition duration-300 bg-black rounded-xl h-40 flex items-center justify-center"
-              style={{
-                backgroundImage: cat.preview ? `url(${cat.preview})` : "none",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              className="
+              group-hover:bg-black/70 transition duration-300
+              bg-black rounded-xl h-40 flex items-center justify-center
+              "
             >
-              {!cat.preview && (
-                <span className="text-white font-bold text-2xl capitalize tracking-wide">
-                  {cat.name}
-                </span>
-              )}
+              <span className="text-white font-bold text-2xl capitalize tracking-wide">
+                {cat.name}
+              </span>
             </div>
           </Link>
         ))}
