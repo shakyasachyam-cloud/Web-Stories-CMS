@@ -9,7 +9,7 @@ export default function CategoryPage() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/stories");
+        const res = await axios.get("https://web-stories-cms-player-mpph.vercel.app/api/stories");
         // Filter stories by category
         const filtered = res.data.filter(story => story.category === category);
         setStories(filtered);
