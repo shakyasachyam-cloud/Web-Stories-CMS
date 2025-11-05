@@ -5,10 +5,19 @@ const cors = require('cors');
 const authRoutes = require("./routes/auth");
 
 const app = express();
+const corsOptions = {
+  origin: [
+    'https://web-stories-cms-player.vercel.app', // your frontend URL
+    'http://localhost:3000', // for local testing
+  ],
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true,
+};
+
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use("/api/auth", authRoutes);
 
 // Connect to MongoDB
