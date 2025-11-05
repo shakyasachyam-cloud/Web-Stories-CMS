@@ -7,7 +7,7 @@ const authRoutes = require("./routes/auth");
 const app = express();
 const corsOptions = {
   origin: [
-    'https://web-stories-cms-player.vercel.app/', // your frontend URL
+    'https://web-stories-cms-player.vercel.app', // your frontend URL
     'http://localhost:3000', // for local testing
   ],
   methods: ['GET','POST','PUT','DELETE'],
