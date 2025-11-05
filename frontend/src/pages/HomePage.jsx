@@ -10,7 +10,7 @@ export default function HomePage() {
   }, []);
 
   const loadCategories = async () => {
-    const res = await axios.get("http://localhost:5000/api/stories");
+    const res = await axios.get("`${process.env.REACT_APP_API_URL}/api/stories/api/stories");
 
     const grouped = {};
 
