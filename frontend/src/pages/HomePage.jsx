@@ -10,7 +10,7 @@ export default function HomePage() {
   }, []);
 
   const loadCategories = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/stories`);
+    const res = await axios.get(`${import.meta.env.BASE_URL }/stories`);
 
     console.log(res.data);
 
