@@ -10,7 +10,8 @@ export default function HomePage() {
   }, []);
 
   const loadCategories = async () => {
-    const res = await axios.get("https://web-stories-cms-player-mpph.vercel.app/api/stories");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/stories`);
+
     console.log(res.data);
 
     const grouped = {};

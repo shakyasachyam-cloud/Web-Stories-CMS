@@ -13,7 +13,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://web-stories-cms-player-mpph.vercel.app/api/auth/register", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/stories`, {
         name,
         email,
         password,

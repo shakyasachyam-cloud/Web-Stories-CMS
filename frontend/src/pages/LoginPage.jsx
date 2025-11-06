@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://web-stories-cms-player-mpph.vercel.app/api/auth/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/stories`, {
         email,
         password,
       });
