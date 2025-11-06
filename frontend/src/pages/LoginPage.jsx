@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -49,6 +49,13 @@ export default function LoginPage() {
         <button className="w-full bg-blue-600 py-3 rounded hover:bg-blue-700">
           Login
         </button>
+
+        <Link
+          to="/reset-admin"
+          className="mt-3 block text-center text-blue-400 hover:underline text-sm"
+        >
+          Forgot email or password?
+        </Link>
       </form>
     </div>
   );
