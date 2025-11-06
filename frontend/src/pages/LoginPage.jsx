@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${import.meta.env.BASE_URL }/stories`, {
+      const res = await axios.post("https://web-stories-cms.vercel.app/api/auth/login", {
         email,
         password,
       });

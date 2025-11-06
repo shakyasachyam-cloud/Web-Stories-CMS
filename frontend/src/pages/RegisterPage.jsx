@@ -13,7 +13,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${import.meta.env.BASE_URL }/stories`, {
+      const res = await axios.post("https://web-stories-cms.vercel.app/api/auth/register", {
         name,
         email,
         password,
