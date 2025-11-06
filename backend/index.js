@@ -9,10 +9,16 @@ const storiesRoutes = require("./routes/stories");
 const app = express();
 
 // ✅ CORS for frontend
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      'https://web-stories-cms-f8qf.vercel.app', // your frontend
+      'http://localhost:5173',                   // optional for local dev
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true,
+  })
+);
 
 // ✅ Middleware
 app.use(express.json({ limit: '10mb' }));
